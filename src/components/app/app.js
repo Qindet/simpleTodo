@@ -25,7 +25,8 @@ export default class App extends Component {
             label,
             important: false,
             done: false,
-            id: this.maxId++
+            id: this.maxId++,
+            visible: true
         }
   }
 
@@ -76,6 +77,9 @@ export default class App extends Component {
     }
 
 
+    onSearch = (text) => {
+        console.log(text)
+    }
 
   render() {
 
@@ -87,7 +91,7 @@ export default class App extends Component {
           <div className="todo-app">
               <AppHeader toDo={todoCount} done={doneCount} />
               <div className="top-panel d-flex">
-                  <SearchPanel />
+                  <SearchPanel onSearch={this.onSearch}/>
                   <ItemStatusFilter />
               </div>
 
