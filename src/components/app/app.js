@@ -78,7 +78,19 @@ export default class App extends Component {
 
 
     onSearch = (text) => {
+        let im
         console.log(text)
+        const newArr = this.state.todoData.map(item => {
+
+            if (item.label.include(text)) {
+                im = true
+            } else {
+                im = false
+            }
+            return {
+
+            }
+        })
     }
 
   render() {
