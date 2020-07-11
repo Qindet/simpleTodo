@@ -14,10 +14,12 @@ export default class App extends Component {
     maxId = 100
 
   state = {
+
       todoData: [
           this.createTodoItem('Drink'),
           this.createTodoItem('Make')
-        ]
+        ],
+      term: ''
   }
 
   createTodoItem(label) {
@@ -25,8 +27,7 @@ export default class App extends Component {
             label,
             important: false,
             done: false,
-            id: this.maxId++,
-            visible: true
+            id: this.maxId++
         }
   }
 
@@ -78,24 +79,24 @@ export default class App extends Component {
 
 
     onSearch = (text) => {
-        let im
-        console.log(text)
-        const newArr = this.state.todoData.map(item => {
+     this.setState({term:text})
+    }
 
-            if (item.label.include(text)) {
-                im = true
-            } else {
-                im = false
-            }
-            return {
-
-            }
+    search(items, term) {
+        if (term.length === 0 ) {
+            return items
+        }
+        return  items.filter((item) => {
+            return item.label.toLowerCase().indexOf(term.toLowerCase()) >  -1
         })
+
     }
 
   render() {
 
-        const {todoData} = this.state
+        const {todoData, term} = this.state
+
+      const visibleItems = this.search(todoData, term)
 
         const doneCount = todoData.filter((item) => item.done).length
         const todoCount = todoData.length - doneCount
@@ -107,7 +108,7 @@ export default class App extends Component {
                   <ItemStatusFilter />
               </div>
 
-              <TodoList todos={todoData}
+              <TodoList todos={visibleItems}
                         onDeleted={ this.deleteItem}
                         onToggleImportant={this.onToggleImportant}
                         onToggleDone={this.onToggleDone}/>
